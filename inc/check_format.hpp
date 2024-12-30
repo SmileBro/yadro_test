@@ -20,4 +20,21 @@ bool check_tm_increase(std::tm less, std::tm more);
 
 bool check_event(Event& event, std::string line);
 
+bool check_long(long long* dst, std::string in);
+
+bool check_long(std::string in);
+
+bool check_tm(std::string in);
+
+/*
+    Check if input string format is "%H:%M"
+	also checks if `old_tm` is less than std::tm parsed from `in` 
+	@param *old_tm std::tm that should be less
+    @param in std::string that should be more and have no format errors
+	@return True if there are format errors or `old_tm` is less
+*/
+bool check_tm(std::tm *old_tm, const std::string in);
+
+bool check_client(const std::string client);
+
 #endif

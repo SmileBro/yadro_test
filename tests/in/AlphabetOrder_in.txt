@@ -1,0 +1,15 @@
+5
+09:00 20:00
+100
+09:00 1 glient1
+09:00 1 flient2
+09:15 1 elient3
+09:36 1 dlient4
+09:36 2 flient2 5
+09:59 2 dlient4 1
+10:01 2 elient3 4
+10:16 1 client5
+10:16 1 blient6
+10:23 2 glient1 3
+10:25 2 client5 2
+10:30 3 blient6

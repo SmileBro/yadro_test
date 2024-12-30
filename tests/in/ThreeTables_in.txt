@@ -1,0 +1,16 @@
+3
+12:00 20:00
+20
+12:05 1 plzhireme1
+12:10 2 plzhireme1 1
+12:46 1 plzhireme2
+12:50 2 plzhireme2 2
+15:00 1 plzhireme5
+15:10 3 plzhireme5
+16:00 4 plzhireme2
+18:45 1 plzhireme6
+18:50 3 plzhireme6
+19:00 1 plzhireme7
+19:10 3 plzhireme7
+19:30 4 plzhireme1
+19:50 4 plzhireme5
