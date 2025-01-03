@@ -41,6 +41,8 @@ enum ErrNum
     PlaceIsBusy,
     ClientUnknown,
     ICanWaitNoLonger,
+    AlreadyInQueue,
+    HavePlaceAlready
 };
 
 #endif

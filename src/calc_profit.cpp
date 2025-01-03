@@ -12,7 +12,7 @@
 
 void print_error(std::tm tm, ErrNum err)
 {
-    if (err > ICanWaitNoLonger)
+    if (err > HavePlaceAlready)
     {
         return;
     }
@@ -34,6 +34,12 @@ void print_error(std::tm tm, ErrNum err)
         break;
     case ICanWaitNoLonger:
         std::cout << "ICanWaitNoLonger!\n";
+        break;
+    case AlreadyInQueue:
+        std::cout << "AlreadyInQueue\n";
+        break;
+    case HavePlaceAlready:
+        std::cout << "HavePlaceAlready\n";
         break;
     default:
         break;
@@ -103,15 +109,15 @@ int calc_profit(const CompClub& club_info, const char* file_name)
             }
             clients[client] = -1;
             break; 
-        case CLIENT_SAT: 
-            if (tables[event.table].isOccupied())
-            {
-                print_error(event.time, PlaceIsBusy);
-                break;
-            }
+        case CLIENT_SAT:
             if (clients[client] == 0)
             {
                 print_error(event.time, ClientUnknown);
+                break;
+            }
+            if (tables[event.table].isOccupied())
+            {
+                print_error(event.time, PlaceIsBusy);
                 break;
             }
             if (clients[client] > 0)
@@ -124,17 +130,36 @@ int calc_profit(const CompClub& club_info, const char* file_name)
             free_tables--;
             break; 
         case CLIENT_WAITING:
+            // If already in queue
+            if (clients[client] == -2)
+            {
+                print_error(event.time, AlreadyInQueue);
+                break;
+            }
+            // If already have a place
+            if (clients[client] > 0)
+            {
+                print_error(event.time, HavePlaceAlready);
+                break;
+            }
+            if (clients[client] == 0)
+            {
+                print_error(event.time, ClientUnknown);
+                break;
+            }
             if (free_tables > 0)
             {
                 print_error(event.time, ICanWaitNoLonger);
                 break; 
             }
-            if (q.size() > club_info.tables)
+            if (q.size() + 1 > club_info.tables)
             {
+                clients[client] = 0;
                 print_event(event.time, OUT, client);
                 break;
             }
             q.push(client);
+            clients[client] = -2;
             break;
         case CLIENT_LEFT:
             if (clients[client] == 0)
@@ -142,17 +167,20 @@ int calc_profit(const CompClub& club_info, const char* file_name)
                 print_error(event.time, ClientUnknown);
                 break;
             }
-            tables[clients[client]].freeOccupied(event.time, club_info.price);
-            if (q.size() > 0)
+            if (clients[client] > 0)
             {
-                std::string new_client = q.front();
-                q.pop();
-                tables[clients[client]].setOccupied(event.time);
-                clients[new_client] = clients[client];
-                print_event(event.time, DEQUEUE, new_client, clients[client]);
-            } else 
-            {
-                free_tables++;
+                tables[clients[client]].freeOccupied(event.time, club_info.price);
+                if (q.size() > 0)
+                {
+                    std::string new_client = q.front();
+                    q.pop();
+                    tables[clients[client]].setOccupied(event.time);
+                    clients[new_client] = clients[client];
+                    print_event(event.time, DEQUEUE, new_client, clients[client]);
+                } else 
+                {
+                    free_tables++;
+                }
             }
             clients[client] = 0;
             break;
@@ -165,7 +193,7 @@ int calc_profit(const CompClub& club_info, const char* file_name)
     std::vector<std::string> names;
     for (auto kv : clients)
     {
-        if (kv.second > 0)
+        if (kv.second != 0)
         {
             names.push_back(kv.first);
         }

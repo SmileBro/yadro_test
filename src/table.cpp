@@ -2,6 +2,11 @@
 
 void Table::freeOccupied(std::tm end, long long price)
 {
+    if (!occupied)
+    {
+        return;
+    }
+
     // Increase total time
     int minutes = end.tm_hour * 60 - occupationTm.tm_hour * 60 + end.tm_min - occupationTm.tm_min;
     totalTm.tm_hour += (minutes / 60);

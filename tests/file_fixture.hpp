@@ -73,13 +73,14 @@ protected:
         while (std::getline(output_stream, output_line) && 
                 std::getline(expected_stream, expected_line))
         {
-            ASSERT_EQ(output_line, expected_line) << "DIFF: " + output_line + "\n" + expected_line;
+            ASSERT_EQ(output_line, expected_line);
         }
 
         // No more to read in files
         std::string line;
         ASSERT_FALSE((output_stream >> line) && 
                      (expected_stream >> line)) << "LAST READ: " + output_line + "\n" + expected_line;
+        ASSERT_TRUE(output_stream.eof() && expected_stream.eof());
         
         output_stream.close();
         expected_stream.close();

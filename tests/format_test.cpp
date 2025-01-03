@@ -354,3 +354,23 @@ TEST_F(FileTest, TimeDecreased)
     ASSERT_TRUE(res);
     CompareOutputs();
 }
+
+TEST_F(FileTest, EventAfterClosing)
+{
+    RedirectCout();
+    CompClub club_info{};
+    bool res = check_format(club_info, GetInputFile().c_str());
+    ReturnCout();
+    ASSERT_TRUE(res);
+    CompareOutputs();
+}
+
+TEST_F(FileTest, ReversedTimestamps)
+{
+    RedirectCout();
+    CompClub club_info{};
+    bool res = check_format(club_info, GetInputFile().c_str());
+    ReturnCout();
+    ASSERT_TRUE(res);
+    CompareOutputs();
+}

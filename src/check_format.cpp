@@ -202,6 +202,11 @@ bool check_format(CompClub& club_info, const char* file_name)
         std::cout << line << std::endl;
         return 1;        
     }
+    if (check_tm_increase(club_info.start, club_info.end))
+    {
+        std::cout << line << std::endl;
+        return 1;
+    }
 
     // Check price
     std::getline(f, line, '\n');
@@ -222,7 +227,8 @@ bool check_format(CompClub& club_info, const char* file_name)
             std::cout << line << std::endl;
             return 1;
         }
-        if (event.table != 0 && event.table > club_info.tables)
+        if ((event.table != 0 && event.table > club_info.tables) ||
+            (check_tm_increase(event.time, club_info.end)))
         {
             std::cout << line << std::endl;
             return 1;

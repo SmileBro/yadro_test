@@ -1,0 +1,20 @@
+3
+09:00 21:00
+100
+09:00 1 alice
+09:00 1 bob
+09:00 1 charlie
+09:00 1 depp
+09:00 1 eva
+09:10 2 charlie 1
+09:15 2 depp 2
+09:20 2 eva 3
+09:20 3 alice
+09:20 3 bob
+09:30 1 frank
+09:40 1 grace
+09:40 3 frank
+09:50 3 grace
+10:00 4 charlie
+11:50 1 grace
+12:20 3 grace

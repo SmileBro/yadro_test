@@ -1,0 +1,11 @@
+10:00
+10:00 1 client1
+12:00 2 client1 1
+13:00 1 client2
+14:00 3 client2
+15:00 3 client1
+15:00 13 HavePlaceAlready
+15:58 11 client1
+15:58 11 client2
+15:58
+1 40 03:58
